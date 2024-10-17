@@ -1,0 +1,127 @@
+
+#creates question class and question, options, answer as instance attributes
+class Question:
+    def __init__(self, question, options, answer):
+        self.question = question
+        self.options = options
+        self.answer = answer
+#displays question and loops through options
+    def display(self):
+        print(self.question)
+        for option in self.options:
+            print(option)
+
+#define questions and options in a list of dictionaries
+questions = [
+{
+"question": "What is the capital of Denmark?",
+"options": ["A. Copenhagen", "B. Reykjavik", "C. Berlin", "D. Stockholm"],
+"answer": "A"
+},
+{
+"question": "How many primary colours are there?",
+"options": ["A. 3", "B. 4", "C. 5", "D. 6"],
+"answer": "A"
+},
+{
+"question": "What is the fourth letter of the greek alphabet?",
+"options": ["A. Gamma", "B. Delta", "C. Kappa", "D. Chi"],
+"answer": "B"
+},
+{
+"question": "Which US state has the busiest airport in the country?",
+"options": ["A. New York", "B. Pennsylvania", "C. Los Angeles", "D. Georgia"],
+"answer": "D"
+},
+{
+"question": "Which continent has the worlds largest desert?",
+"options": ["A. Africa", "B. Asia", "C. Antarctica", "D. Australia/Oceania"],
+"answer": "C"
+},
+{
+"question": "What planet in our solar system is closest to the Sun?",
+"options": ["A. Neptune", "B. Mars", "C. Jupiter", "D. Mercury"],
+"answer": "D"
+},
+{
+"question": "What is the smallest unit of matter?",
+"options": ["A. Atom", "B. Proton", "C. Quark", "D. Electron"],
+"answer": "A"
+},
+{
+"question": "What decade was the internet created?",
+"options": ["A. 1970s", "B. 1960s", "C. 1980s", "D. 1990s"],
+"answer": "B"
+},
+{
+"question": "What is a group of pandas known as?",
+"options": ["A. An embarassment", "B. A flock", "C. A circus", "D. Harmony"],
+"answer": "A"
+},
+{
+"question": "Which country drinks the most coffee per capita?",
+"options": ["A. Italy", "B. USA", "C. Finland", "D. Brazil"],
+"answer": "C"
+}
+]
+#define prize money
+prize_money = [
+"£100",
+"£500",
+"£1,000",
+"£2,500",
+"£5,000",
+"£10,000",
+"£25,000",
+"£100,000",
+"£500,000",
+"£1,000,000"
+]
+
+#show question to player
+def showquestion(question):
+#prints the question
+    print(question["question"])
+#runs for loop through options part of dictionary and prints options
+    for option in question["options"]:
+        print(option)
+
+#show current prize money to player
+def showprizemoney(question_num):
+#prints string saying current question and question number using while loop found further down
+    print("Current question:", question_num + 1)
+#prints string saying current prize money and returns the prize money for the current question number
+    print("Prize Money:", prize_money[question_num])
+    print("")
+    
+#starts game at question number 1 and prize money won at £0
+def startgame():
+    question_number = 0
+    current_prize = 0
+    with open("titleasciiart.txt") as f:
+        titleart = f.read()
+    print(titleart)
+    print("Hello! Welcome to Who Wants to be a Millionaire!\n")
+    
+    #while loop that displays prize and question as long as there are questions left
+    while question_number < len(questions):
+        showprizemoney(question_number)
+        showquestion(questions[question_number])
+    #asks for answer and saves answer into temporary answer variable
+        answer = input("\nPlease choose your answer. If you would like to quit, please type Quit. ")
+    #if function that tells player if theyre correct or wrong, also quits if quit is typed out.    
+        if answer == questions[question_number]["answer"]:
+            current_prize = prize_money[question_number]
+            question_number += 1
+            print("\nYou are correct! Here comes the next question.\n")
+            print("---------------------------------------------------------------------------------------------------------------------------------------------------------")
+        elif answer == "Quit":
+            break
+        else:
+            print("\nYou are incorrect! You have lost the game.\n")
+            break
+#prints you failed after game is lost, also shows total money won
+    print("The game has finished.")
+    print("Total money won: ", current_prize)
+#runs the function to start the game when the file is executed
+startgame()
